@@ -154,6 +154,8 @@ export class YourAppModule {}
 
 - [Confirm dialog](https://www.primefaces.org/primeng/confirmdialog)
 
+<img width="945" alt="primeng" src="https://user-images.githubusercontent.com/91354582/209602842-4a7671fb-36c7-48e7-83fe-1a993cff24e9.png">
+
 # Link tham khảo
 
 - [Giới thiệu về PrimeNG](https://dontpaniclabs.com/blog/post/2021/06/15/introduction-to-primeng/)
