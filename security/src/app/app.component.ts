@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  username = '';
   title = 'security';
   htmlSnippet = 'Template <script>alert("0wned")</script> <b>Syntax</b>';
 

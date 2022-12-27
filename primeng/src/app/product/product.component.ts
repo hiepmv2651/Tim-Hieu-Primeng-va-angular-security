@@ -1,7 +1,8 @@
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Product } from './product';
 import { ProductService } from './product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-product',
@@ -13,6 +14,12 @@ export class ProductComponent implements OnInit {
   displayAddEditModal = false;
   selectedProduct: any = null;
 
+  loading: boolean = true;
+
+  categories!: any[];
+
+  @ViewChild('dt') table!: Table;
+
   constructor(
     private productService: ProductService,
     private confirmationService: ConfirmationService,
@@ -21,11 +28,19 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductList();
+
+    this.categories = [
+      { label: "Men's clothing", value: "Men's clothing" },
+      { label: 'Jewelery', value: 'Jewelery' },
+      { label: 'Electronics', value: 'electronics' },
+      { label: "Women's clothing", value: "Women's clothing" },
+    ];
   }
 
   getProductList() {
     this.productService.getProduct().subscribe((data) => {
       this.products = data;
+      this.loading = false;
     });
   }
 

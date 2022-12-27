@@ -3,20 +3,93 @@
   <p-button label="Add Product" (click)="showAddModal()"></p-button>
 </div>
 
-<p-table [value]="products" [paginator]="true" [rows]="5">
+<p-table #dt [value]="products" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,25,50]"
+  [globalFilterFields]="['title','price','category']" [filterDelay]="0" [showCurrentPageReport]="true"
+  [loading]="loading" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true">
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+      List of Products
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Global Search" />
+      </span>
+    </div>
+  </ng-template>
   <ng-template pTemplate="header">
     <tr>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Category</th>
+      <th></th>
+      <th pSortableColumn="title">Title <p-sortIcon field="title"></p-sortIcon></th>
+      <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+      <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
       <th>Image</th>
+      <th></th>
+    </tr>
+    <tr>
+      <th>
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th>
+        <input pInputText type="text" (input)="dt.filter($any($event.target).value, 'title', 'contains')"
+          placeholder="Search by Title" class="p-column-filter">
+        <!-- <p-columnFilter type="text" field="title"></p-columnFilter> -->
+      </th>
+
+      <th>
+        <!-- <input pInputText type="text" (input)="dt.filter($any($event.target).value, 'price', 'contains')"
+          placeholder="Search by Price" class="p-column-filter"> -->
+        <p-columnFilter type="text" field="price"></p-columnFilter>
+        <!-- <div class="p-d-flex p-jc-between p-ai-center">
+          Price
+          <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
+        </div> -->
+      </th>
+
+      <th>
+        <!-- <p-dropdown [options]="categories" (onChange)="dt.filter($event.value, 'category', 'equals')"
+          styleClass="p-column-filter" placeholder="Select a Category" [showClear]=" true">
+          <ng-template let-option pTemplate="item">
+            <span [class]="'customer-badge status-' + option.value">&#123;&#123;option.label&#125;&#125;</span>
+          </ng-template>
+        </p-dropdown> -->
+        <!-- <p-columnFilter field="category" matchMode="in" [showMenu]="false">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-multiSelect [ngModel]="value" [options]="categories" placeholder="Any" (onChange)="filter($event.value)"
+              optionLabel="label">
+              <ng-template let-option pTemplate="item">
+                <div class="p-multiselect-representative-option">
+                  <span class="p-ml-1">{{option.label}}</span>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+          </ng-template>
+        </p-columnFilter> -->
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Category
+          <p-columnFilter field="category" matchMode="equals" display="menu">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-dropdown [ngModel]="value" [options]="categories" (onChange)="filter($event.value)" placeholder="Any">
+                <ng-template let-option pTemplate="item">
+                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                </ng-template>
+              </p-dropdown>
+            </ng-template>
+          </p-columnFilter>
+        </div>
+      </th>
+      <th>
+
+      </th>
       <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr>
+      <td>
+        <p-tableCheckbox [value]="product"></p-tableCheckbox>
+      </td>
       <td>{{ product.title }}</td>
-      <td>{{ product.price }}</td>
+      <td>{{ product.price | currency:'USD' }}</td>
       <td>{{ product.category }}</td>
       <td><img src="{{ product.image }}" height="30px" alt=""></td>
       <td>
@@ -25,6 +98,11 @@
         <button pButton icon="pi pi-trash" class="p-button-rounded p-button-warning"
           (click)="deleteProduct(product)"></button>
       </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">No customers found.</td>
     </tr>
   </ng-template>
 </p-table>
