@@ -45,6 +45,8 @@ export class AppComponent {
 }
 ```
 
+<img width="170" alt="security" src="https://user-images.githubusercontent.com/91354582/209602587-1fcffb0f-d3ca-4548-ae0f-950cfa569039.png">
+
 Angular nhận ra giá trị là không an toàn và tự động khử trùng nó, loại bỏ phần tử `script` nhưng giữ nội dung an toàn như phần tử `<b>`.
 
 ## Sử dụng trực tiếp các API DOM và explicit sanitization calls
@@ -73,6 +75,8 @@ Hãy nhớ rằng, một giá trị an toàn hay không còn tùy thuộc vào n
 <h4>A trusted URL:</h4>
 <p><a class="e2e-trusted-url" [href]="trustedUrl">Click me</a></p>
 ```
+
+<img width="337" alt="security2" src="https://user-images.githubusercontent.com/91354582/209602654-a73a5131-0b5c-4b72-96c8-f62654cf91b8.png">
 
 Thông thường, Angular sẽ tự động khử độc các URL, vô hiệu hóa những đoạn mã nguy hiểm, và trong development mode, log những hành động này vào console. Để ngăn chặn điều này, đánh dấu giá trị của URL đó như một URL đáng tin cậy bằng cách sử dụng `bypassSecurityTrustUrl` như sau:
 
